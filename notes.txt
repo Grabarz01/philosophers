@@ -1,0 +1,30 @@
+	TO DO:
+#putting everything in philo folder
+
+
+	LOGIC
+cycle 
+
+
+// mamy mutexy na kazdy widelec
+// mamy wszystkich philo
+
+
+
+
+	edge:
+sleep == 0
+eat == 0
+die == 0
+meals to eat == 0
+philos == 0
+
+usleep (t_eat - t_sleep )????
+
+remember to unlocked all previous locks if error ocured
+
+ft_free_res
+
+dodanie zarzadzania ostatnia zmienna
+poprawa błędów w i_destroy
+oddzielnie wiadomosc o zdobyciu 
