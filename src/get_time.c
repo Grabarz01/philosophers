@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:56:10 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/15 15:19:10 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/21 11:49:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ long ft_get_sec_diff(t_tmv beginning , t_tmv end)
 long ft_get_usec_diff(t_tmv beginning , t_tmv end)
 {
 	return (end.tv_usec - beginning.tv_usec);
+}
+
+long ft_get_msec(t_tmv start, t_tmv end)
+{
+	long msec;
+	
+	msec = ((long)(end.tv_sec - start.tv_sec)) * 1000 +
+			((long)(end.tv_usec - start.tv_usec)) / 1000;
+	return (msec);	
 }

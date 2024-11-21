@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:56 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/18 20:01:10 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:48:24 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int ft_init_threads(int nr_of_philos, t_data *data)
 	ft_safe_mutex(LOCK, &data->synch);
 	while(i < nr_of_philos)
 	{
-		if (ft_safe_pthread(&(data->philos[i].philo), CREATE_PHILO, &(data->philos[i]), NULL) == 1)
-			return (ft_i_threads_destroy(data, i));
+		ft_safe_pthread(&(data->philos[i].philo), CREATE_PHILO, &(data->philos[i]), NULL);
 		i++;
 	}
-	if (ft_safe_pthread(&data->monitor, CREATE_MONITOR, NULL, data) == -1)
-		return (ft_i_threads_destroy(data, i));
-	gettimeofday(&data->beginning, NULL);
+	ft_safe_pthread(&data->monitor, CREATE_MONITOR, NULL, data);
 	i = 0;
+	gettimeofday(&data->beginning, NULL);
 	while(i < nr_of_philos)
 	{
 		ft_safe_mutex(LOCK, &(data->philos[i].last_meal_mtx));
@@ -50,9 +48,8 @@ void *ft_philo(void *arg)
 	ft_safe_mutex(UNLOCK, &philo->data->synch);
 	while(1)
 	{
-		status = ft_am_i_dead(philo);
-		if (status == 1)
-			return(NULL);
+		if (ft_am_i_dead(philo) == 1)
+			return (NULL);
 		if (ft_get_forks(philo) == 1)
 			return (NULL);
 	}
@@ -73,23 +70,19 @@ int ft_am_i_dead(t_philo *philo)
 void *ft_monitor(void *arg)
 {
 	t_data *data;
-	bool dead;
 	int status;
 	int i;
 
-	dead = false;
-	i = 0;
 	data = (t_data *)arg;
-	while(dead == false)
+	ft_safe_mutex(LOCK, &data->synch);
+	ft_safe_mutex(UNLOCK, &data->synch);
+	i = 0;
+	while(1)
 	{
 		while(i < data->nr_of_philos)
 		{
-			status = ft_are_u_ok(&(data->philos[i]));
-			if (status == 1)
-			{	
-				dead = true;
-				break;
-			}	
+			if (ft_are_u_ok(&(data->philos[i])) == 1)
+				return (NULL);
 			i++;
 		}
 		usleep(1000);
@@ -106,15 +99,15 @@ int ft_are_u_ok(t_philo *philo)
 	ret = 0;
 	ft_safe_mutex(LOCK, &(philo->last_meal_mtx));
 	gettimeofday(&cur, NULL);
-	if (ft_get_diff(philo->last_meal, cur) > philo->data->lifetime * 1000)
+	if (ft_get_msec(philo->last_meal, cur) > philo->data->lifetime)
 	{
+		ft_safe_mutex(UNLOCK, &(philo->last_meal_mtx));
 		ft_safe_mutex(LOCK, &(philo->data->dead_mtx));
 		philo->data->dead = true;
-		ft_lock_prinft(DEAD, philo->data, cur, philo->id);
 		ft_safe_mutex(UNLOCK, &(philo->data->dead_mtx));
-		ret = 1;
+		ft_print_died(philo, philo->data, cur, philo->id);
+		return(1);
 	}
 	ft_safe_mutex(UNLOCK, &(philo->last_meal_mtx));
-	//printf("ret status %d- philo%d\n", ret, philo->id);
-	return(ret);
+	return (0);
 }

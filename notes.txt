@@ -28,3 +28,7 @@ ft_free_res
 dodanie zarzadzania ostatnia zmienna
 poprawa błędów w i_destroy
 oddzielnie wiadomosc o zdobyciu 
+
+//dodanie mtx meals do kzadego filo i liczenie posiłkow
+//zliczanie liczby psoiłkow  
+//potencjalna zmiana ze sprawdzania czy ktos umar na czas w ktorym ktos umarł

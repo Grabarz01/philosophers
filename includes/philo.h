@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:12:36 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/18 19:51:48 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:09:26 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,11 @@ void *ft_monitor(void *arg);
 int ft_are_u_ok(t_philo *philo);
 
 /*Xlocks.c*/
-void ft_lock_prinft(int value, t_data *data, t_tmv cur_time, int id);
-long ft_get_msec(t_tmv start, t_tmv end);
+int ft_print_eat(t_philo *philo, t_data *data, t_tmv cur_time, int id);
+int ft_print_fork(t_philo *philo, t_data *data, t_tmv cur_time, int id);
+int ft_print_sleep(t_philo *philo, t_data *data, t_tmv cur_time, int id);
+int ft_print_died(t_philo *philo, t_data *data, t_tmv cur_time, int id);
+int ft_print_think(t_philo *philo, t_data *data, t_tmv cur_time, int id);
 
 /*Xeating.c*/
 int ft_get_forks(t_philo *philo);
@@ -149,6 +152,7 @@ int ft_get_forks(t_philo *philo);
 long ft_get_diff(t_tmv beginning , t_tmv end);
 long ft_get_sec_diff(t_tmv beginning , t_tmv end);
 long ft_get_usec_diff(t_tmv beginning , t_tmv end);
+long ft_get_msec(t_tmv start, t_tmv end);
 
 /*Xfree_resources.c*/
 int ft_free_resources(t_data *data, bool mutex, int i);
