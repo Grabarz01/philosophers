@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:44:53 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/21 13:33:22 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:28:18 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int ft_odd_philo(t_philo *philo, int id)
 	ft_safe_mutex(LOCK, philo->r_fork_mtx);
 	if (ft_forks_taken(philo, &tmp) == 1)
 		return (1);
-	ft_my_usleep(philo->data->t_eat * 1000, tmp);
+	usleep(philo->data->t_eat * 1000);
 	ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
 	ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
 	gettimeofday(&tmp, NULL);
@@ -68,10 +68,16 @@ static int ft_even_philo(t_philo *philo, int id)
 	t_tmv tmp;
 
 	ft_safe_mutex(LOCK, philo->r_fork_mtx);
+	gettimeofday(&tmp, NULL);
+	if (ft_print_fork(philo, philo->data, tmp, philo->id) == 1)
+	{
+		ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
+		return (1);
+	}
 	ft_safe_mutex(LOCK, philo->l_fork_mtx);
 	if (ft_forks_taken(philo, &tmp) == 1)
 		return (1);
-	ft_my_usleep(philo->data->t_eat * 1000, tmp);
+	usleep(philo->data->t_eat * 1000);
 	ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
 	ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
 	gettimeofday(&tmp, NULL);
@@ -102,7 +108,7 @@ static int ft_sleep(t_philo *philo, t_tmv begining)
 {
 	t_tmv timer;
 	
-	ft_my_usleep(philo->data->t_sleep * 1000, begining);
+	usleep(philo->data->t_sleep * 1000);
 	gettimeofday(&timer, NULL);
 	if (ft_print_think(philo, philo->data, timer, philo->id) == 1)
 		return (1);
@@ -115,11 +121,11 @@ static void ft_after_sleep(t_philo *philo, t_data *data)
 	long time_to_think;
 
 	philo_nr = philo->data->nr_of_philos;
-	time_to_think = data->t_eat * 2 - data->t_sleep * 2;
 	if (philo_nr % 2 == 0)
-		usleep(1000);
+		usleep(2000);
 	else
 	{ 
+		time_to_think = data->t_eat * 2 - data->t_sleep * 2;
 		if (time_to_think > 0)
 			usleep(time_to_think * 1000);
 		else 

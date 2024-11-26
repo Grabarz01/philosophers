@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:56 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/21 13:48:24 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:08:32 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void *ft_philo(void *arg)
 	philo = (t_philo *)arg;
 	ft_safe_mutex(LOCK, &philo->data->synch);
 	ft_safe_mutex(UNLOCK, &philo->data->synch);
+	if(philo->id % 2 == 0)
+		usleep(1000);
 	while(1)
 	{
 		if (ft_am_i_dead(philo) == 1)
@@ -60,10 +62,7 @@ int ft_am_i_dead(t_philo *philo)
 	int ret;
 	
 	ft_safe_mutex(LOCK, &(philo->data->dead_mtx));
-	if (philo->data->dead == true)
-		ret = 1;
-	else 
-		ret = 0;
+	ret = (int)philo->data->dead;
 	ft_safe_mutex(UNLOCK, &(philo->data->dead_mtx));
 	return(ret);
 }

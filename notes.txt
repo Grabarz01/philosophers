@@ -32,3 +32,11 @@ oddzielnie wiadomosc o zdobyciu
 //dodanie mtx meals do kzadego filo i liczenie posiłkow
 //zliczanie liczby psoiłkow  
 //potencjalna zmiana ze sprawdzania czy ktos umar na czas w ktorym ktos umarł
+
+//10 
+200 150 50 100
+200 50 150
+200 100 100
+
+
+dodanie kodu dla jednego filo

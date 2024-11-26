@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:56:51 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/18 17:50:31 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:27:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int ft_safe_mutex(t_optype type, t_mtx *mutex)
 		perror(NULL);
 		return(-1);
 	}
-		//return (ft_error_message(MTX_ERR));//
 	return (0);
 }
