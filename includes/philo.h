@@ -45,17 +45,18 @@ struct	s_data
 {
 	int nr_of_threads;
 	int nr_of_philos;
-	int meals;
 	bool dead;
 	bool error;
 	long lifetime;
 	long t_eat;
 	long t_sleep;
 	long max_meals;
+	long all_full;
 	//t_mtx error_mtx;
 	t_mtx print;
 	t_mtx *forks;
 	t_mtx synch;
+	t_mtx full_mtx;
 	t_mtx dead_mtx;
 	t_tmv beginning;
 	t_philo *philos;
@@ -70,7 +71,9 @@ typedef struct s_data t_data;
 struct s_philo
 {
 	int id;
-	int meal_count;
+	long meal_count;
+	long meals_needed;
+	bool full;
 	t_mtx last_meal_mtx;
 	t_tmv last_meal;
 	t_mtx *r_fork_mtx;
@@ -107,7 +110,7 @@ struct s_philo
 #define DEAD 4
 /*FUNCTIONS*/
 /*Xforks.c*/
-int ft_init_mutexes(t_data *data);
+void ft_init_mutexes(t_data *data);
 
 /*Xsafe_mutexes.c*/
 int ft_safe_mutex(t_optype type, t_mtx *mutex);
@@ -136,7 +139,7 @@ int ft_init_threads(int value, t_data *data);
 void *ft_philo(void *arg);
 int ft_am_i_dead(t_philo *philo);
 void *ft_monitor(void *arg);
-int ft_are_u_ok(t_philo *philo);
+int ft_are_u_ok(t_philo *philo, int *all_full);
 
 /*Xlocks.c*/
 int ft_print_eat(t_philo *philo, t_data *data, t_tmv cur_time, int id);
@@ -155,8 +158,7 @@ long ft_get_usec_diff(t_tmv beginning , t_tmv end);
 long ft_get_msec(t_tmv start, t_tmv end);
 
 /*Xfree_resources.c*/
-int ft_free_resources(t_data *data, bool mutex, int i);
-int ft_i_threads_destroy(t_data *data, int i);
+int ft_free_resources(t_data *data);
 void ft_wait_threads(t_data *data);
 
 

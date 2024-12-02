@@ -12,17 +12,16 @@
 
 #include "philo.h"
 
-static int ft_destroy_mutexes(t_data *data, int nr);
+static void ft_destroy_mutexes(t_data *data);
 
-int ft_free_resources(t_data *data, bool mutex, int nr)
+int ft_free_resources(t_data *data)
 {
 	int error;
 	int i;
 
 	i = 0;
 	error = 0;
-	if (mutex == true && ft_destroy_mutexes(data, nr) == -1)
-		error = -1;
+	ft_destroy_mutexes(data);
 	if (data->forks)
 		free(data->forks);
 	if (data->philos)
@@ -30,7 +29,7 @@ int ft_free_resources(t_data *data, bool mutex, int nr)
 	return(error);
 }
 
-static int ft_destroy_mutexes(t_data *data, int nr)
+static void ft_destroy_mutexes(t_data *data)
 {
 	int i;
 
@@ -39,12 +38,12 @@ static int ft_destroy_mutexes(t_data *data, int nr)
 	{
 		ft_safe_mutex(DESTROY, &(data->philos[i].last_meal_mtx));
 		ft_safe_mutex(DESTROY, &(data->forks[i]));
+		//todo: wstawienie nowych 
 		i++;
 	}
 	ft_safe_mutex(DESTROY, &(data->synch));
 	ft_safe_mutex(DESTROY, &(data->dead_mtx));
 	ft_safe_mutex(DESTROY, &(data->print));
-
 }
 // int ft_i_threads_destroy(t_data *data, int i)
 // {

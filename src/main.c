@@ -27,23 +27,18 @@ int main(int argc, char **argv)
 		return (1);
 	if (ft_data_init(&data, argc, argv) == -1)
 	{
-		ft_free_resources(&data, false, 0);
+		ft_free_resources(&data);
 		return (1);
 	}
-	nr_of_mtxes = ft_init_mutexes(&data);
-	if (nr_of_mtxes > 0)
-	{
-		ft_free_resources(&data, true, nr_of_mtxes);
-		return (1);
-	}
+	ft_init_mutexes(&data);
 	if (ft_init_threads(data.nr_of_philos, &data) == -1)
 	{
-		ft_free_resources(&data, true, data.nr_of_philos + 3);
+		ft_free_resources(&data);
 		return (1);
 	}
 	ft_wait_threads(&data);
-	if (ft_free_resources(&data, true, data.nr_of_philos + 3) == -1)
-		return(1);
+	ft_free_resources(&data);
+	return(0);
 }
 
 

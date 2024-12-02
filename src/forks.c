@@ -15,27 +15,21 @@
 static void ft_assign_forks(t_data *data);
 static void ft_assign_mtx(t_philo *philo, int i, t_data *data);
 
-int ft_init_mutexes(t_data *data)
+void ft_init_mutexes(t_data *data)
 {
 	int i;
 	
 	i = 0;
 	while (i < data->nr_of_philos)
 	{
-		if (ft_safe_mutex(INIT, &(data->forks[i])) == -1)
-			return (i + 1);
+		ft_safe_mutex(INIT, &(data->forks[i]));
 		i++;
 	}
-	if (ft_safe_mutex(INIT, &(data->synch)) == -1)
-		return (i + 1);
-	i++;
-	if (ft_safe_mutex(INIT, &(data->dead_mtx)) == -1)
-		return (i + 1);
-	i++;
-	if (ft_safe_mutex(INIT, &(data->print)) == -1)
-		return (i + 1);
+	ft_safe_mutex(INIT, &(data->synch));
+	ft_safe_mutex(INIT, &(data->dead_mtx));
+	ft_safe_mutex(INIT, &(data->print));
+	ft_safe_mutex(INIT, &(data->full_mtx));
 	ft_assign_forks(data);
-	return(0);
 }
 
 //odd or even depends on philo's id

@@ -80,6 +80,12 @@ static int ft_even_philo(t_philo *philo, int id)
 	usleep(philo->data->t_eat * 1000);
 	ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
 	ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
+	if(++(philo->meal_count) == philo->data->max_meals)
+	{
+		ft_safe_mutex(LOCK, &(philo->data->full_mtx));
+		philo->data->all_full++;
+		ft_safe_mutex(UNLOCK, &(philo->data->full_mtx));
+	}
 	gettimeofday(&tmp, NULL);
 	if (ft_print_sleep(philo, philo->data, tmp, philo->id) == 1)
 		return (1);

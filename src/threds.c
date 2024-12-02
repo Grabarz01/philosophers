@@ -71,6 +71,7 @@ void *ft_monitor(void *arg)
 	t_data *data;
 	int status;
 	int i;
+	int all_full;
 
 	data = (t_data *)arg;
 	ft_safe_mutex(LOCK, &data->synch);
@@ -80,17 +81,24 @@ void *ft_monitor(void *arg)
 	{
 		while(i < data->nr_of_philos)
 		{
-			if (ft_are_u_ok(&(data->philos[i])) == 1)
+			if (ft_are_u_ok(&(data->philos[i]), &all_full) == 1)
 				return (NULL);
+			if(all_full == data->nr_of_philos)
+			{
+				ft_safe_mutex(LOCK, &(data->dead_mtx));
+				data->dead = true;
+				ft_safe_mutex(UNLOCK, &(data->dead_mtx));
+			}
 			i++;
 		}
+		all_full = 0;
 		usleep(1000);
 		i = 0;
 	}
 	return (NULL);
 }
 
-int ft_are_u_ok(t_philo *philo)
+int ft_are_u_ok(t_philo *philo, int *all_full)
 {
 	t_tmv cur;
 	int ret;
@@ -108,5 +116,15 @@ int ft_are_u_ok(t_philo *philo)
 		return(1);
 	}
 	ft_safe_mutex(UNLOCK, &(philo->last_meal_mtx));
+	ft_safe_mutex(LOCK, &(philo->data->full_mtx));
+	if(philo->data->all_full == philo->data->max_meals)
+	{
+		ft_safe_mutex(UNLOCK, &(philo->data->full_mtx));
+		ft_safe_mutex(LOCK, &(philo->data->dead_mtx));
+		philo->data->dead = true;
+		ft_safe_mutex(UNLOCK, &(philo->data->dead_mtx));
+		return (1);
+	}
+	ft_safe_mutex(UNLOCK, &(philo->data->full_mtx));
 	return (0);
 }

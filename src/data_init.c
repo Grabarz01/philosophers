@@ -25,6 +25,7 @@ int ft_data_init(t_data *data, int argc, char **argv)
 	data->forks = NULL;
 	data->dead = false;
 	data->error = false;
+	data->all_full = 0;
 	if (ft_get_values(argc, argv, &values) == -1)
 		return (-1);
 	ft_set_input_values(values, data, argc);
@@ -48,8 +49,10 @@ static int ft_init_philos(t_data *data)
 		return(ft_error_message(NO_MEM));
 	while(i < data->nr_of_philos)
 	{
+		(data->philos)[i].meals_needed = data->max_meals;
 		(data->philos)[i].id = i + 1;
 		(data->philos)[i].data = data;
+		(data->philos)[i].meal_count = 0;
 		ft_safe_mutex(INIT, &(data->philos[i].last_meal_mtx));
 		i++;
 	}
