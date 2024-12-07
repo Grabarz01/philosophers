@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threds.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:29:56 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/25 15:08:32 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:30:18 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int ft_init_threads(int nr_of_philos, t_data *data)
 	ft_safe_mutex(LOCK, &data->synch);
 	while(i < nr_of_philos)
 	{
-		ft_safe_pthread(&(data->philos[i].philo), CREATE_PHILO, &(data->philos[i]), NULL);
+		if(nr_of_philos == 1)
+			ft_safe_pthread(&(data->philos[i].philo), CREATE_ALONE, &(data->philos[i]), NULL);
+		else 
+			ft_safe_pthread(&(data->philos[i].philo), CREATE_PHILO, &(data->philos[i]), NULL);
 		i++;
 	}
 	ft_safe_pthread(&data->monitor, CREATE_MONITOR, NULL, data);

@@ -38,5 +38,3 @@ oddzielnie wiadomosc o zdobyciu
 200 50 150
 200 100 100
 
-
-dodanie kodu dla jednego filo

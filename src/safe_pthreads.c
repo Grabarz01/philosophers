@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_pthreads.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:58:50 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/16 16:51:08 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:28:26 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int ft_safe_pthread(pthread_t *thread, t_optype type, t_philo *philo, t_data *da
 		value = pthread_create(thread, NULL, &ft_monitor, data);
 	else if (type == CREATE_PHILO)
 		value = pthread_create(thread, NULL, &ft_philo, philo);
+	else if (type == CREATE_ALONE)
+		value = pthread_create(thread, NULL, &ft_philo_alone, philo);
 	else if (type == JOIN)
 		value = pthread_join(*thread, NULL);
 	if (value != 0)

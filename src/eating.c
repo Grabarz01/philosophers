@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eating.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:44:53 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/22 16:28:18 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 09:15:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,8 @@ static int ft_forks_taken(t_philo *philo, t_tmv *tmp)
 {
 	ft_safe_mutex(LOCK, &philo->last_meal_mtx);
 	gettimeofday(&philo->last_meal, NULL);
-	tmp->tv_sec = philo->last_meal.tv_sec;
-	tmp->tv_usec = philo->last_meal.tv_usec;
 	ft_safe_mutex(UNLOCK, &philo->last_meal_mtx);
+	gettimeofday(tmp, NULL);
 	if (ft_print_eat(philo, philo->data, *tmp, philo->id) == 1)
 	{
 		ft_safe_mutex(UNLOCK, philo->r_fork_mtx);

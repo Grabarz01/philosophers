@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:12:36 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/21 13:09:26 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:28:40 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum s_optype
 	DESTROY,
 	CREATE_PHILO,
 	CREATE_MONITOR,
+	CREATE_ALONE,
 	JOIN,
 };
 
@@ -161,5 +162,6 @@ long ft_get_msec(t_tmv start, t_tmv end);
 int ft_free_resources(t_data *data);
 void ft_wait_threads(t_data *data);
 
+void *ft_philo_alone(void *arg);
 
 #endif

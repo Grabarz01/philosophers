@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_mutexes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:56:51 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/22 16:27:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:53:50 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int ft_safe_mutex(t_optype type, t_mtx *mutex)
 	{
 		printf("Mutex operation failed (error code %d)\n", value);
 		perror(NULL);
-		return(-1);
+		return (-1);
 	}
 	return (0);
 }

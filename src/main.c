@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:11:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/18 17:49:38 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:52:11 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 - array of integers 
 */
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
-	int nr_of_mtxes;
-	
+	t_data	data;
+	int		nr_of_mtxes;
+
 	nr_of_mtxes = 0;
 	if (ft_input_checker(argc, argv) == -1)
 		return (1);
@@ -38,7 +38,5 @@ int main(int argc, char **argv)
 	}
 	ft_wait_threads(&data);
 	ft_free_resources(&data);
-	return(0);
+	return (0);
 }
-
-

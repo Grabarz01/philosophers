@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:15:00 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/18 17:54:01 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:47:16 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	ft_pos_atoi(const char *nptr);
-static void ft_set_input_values(int *values, t_data *data, int argc);
-static int ft_init_philos(t_data *data);
-static int ft_get_values(int argc, char **argv, int **values);
+static void	ft_set_input_values(int *values, t_data *data, int argc);
+static int	ft_init_philos(t_data *data);
+static int	ft_get_values(int argc, char **argv, int **values);
 
-int ft_data_init(t_data *data, int argc, char **argv)
+int	ft_data_init(t_data *data, int argc, char **argv)
 {
-	int *values;
-	
+	int	*values;
+
 	data->philos = NULL;
 	data->forks = NULL;
 	data->dead = false;
@@ -32,22 +32,22 @@ int ft_data_init(t_data *data, int argc, char **argv)
 	if (data->nr_of_philos == 0)
 		return (ft_error_message(NO_PHILO));
 	if (ft_init_philos(data) == -1)
-		return(-1);
+		return (-1);
 	data->forks = malloc(sizeof(t_mtx) * data->nr_of_philos);
 	if (!data->forks)
-		return(ft_error_message(NO_MEM));
-	return(0);
+		return (ft_error_message(NO_MEM));
+	return (0);
 }
 
-static int ft_init_philos(t_data *data)
+static int	ft_init_philos(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->philos = malloc(sizeof(t_philo) * data->nr_of_philos);
 	if (!data->philos)
-		return(ft_error_message(NO_MEM));
-	while(i < data->nr_of_philos)
+		return (ft_error_message(NO_MEM));
+	while (i < data->nr_of_philos)
 	{
 		(data->philos)[i].meals_needed = data->max_meals;
 		(data->philos)[i].id = i + 1;
@@ -58,7 +58,8 @@ static int ft_init_philos(t_data *data)
 	}
 	return (0);
 }
-static void ft_set_input_values(int *values, t_data *data, int argc)
+
+static void	ft_set_input_values(int *values, t_data *data, int argc)
 {
 	data->nr_of_philos = values[0];
 	data->lifetime = values[1];
@@ -68,14 +69,15 @@ static void ft_set_input_values(int *values, t_data *data, int argc)
 		data->max_meals = values[4];
 	free(values);
 }
-static int ft_get_values(int argc, char **argv, int **values)
+
+static int	ft_get_values(int argc, char **argv, int **values)
 {
-	int i;
-	int *new_values;
-	
+	int	i;
+	int	*new_values;
+
 	new_values = malloc(sizeof(int) * (argc - 1));
-	if(!new_values)
-		return(ft_error_message(NO_MEM));
+	if (!new_values)
+		return (ft_error_message(NO_MEM));
 	i = 0;
 	while (argv[i + 1])
 	{
@@ -83,7 +85,7 @@ static int ft_get_values(int argc, char **argv, int **values)
 		if (new_values[i] == -1)
 		{
 			free(new_values);
-			return(-1);
+			return (-1);
 		}
 		i++;
 	}

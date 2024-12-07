@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_resources.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/11/22 15:11:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/07 09:46:03 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ static void ft_destroy_mutexes(t_data *data)
 	int i;
 
 	i = 0;
-	while(i <= data->nr_of_philos)
+	while(i < data->nr_of_philos)
 	{
 		ft_safe_mutex(DESTROY, &(data->philos[i].last_meal_mtx));
 		ft_safe_mutex(DESTROY, &(data->forks[i]));
-		//todo: wstawienie nowych 
 		i++;
 	}
 	ft_safe_mutex(DESTROY, &(data->synch));
