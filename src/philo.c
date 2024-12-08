@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_alone.c                                      :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:51:30 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/08 19:23:15 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:42:36 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 void	*ft_philo_alone(void *arg)
 {
@@ -27,18 +26,17 @@ void	*ft_philo_alone(void *arg)
 	return (NULL);
 }
 
-
-void *ft_philo(void *arg)
+void	*ft_philo(void *arg)
 {
-	t_philo *philo;
-	int status;
-	
+	t_philo	*philo;
+	int		status;
+
 	philo = (t_philo *)arg;
 	ft_safe_mutex(LOCK, &philo->data->synch);
 	ft_safe_mutex(UNLOCK, &philo->data->synch);
-	if(philo->id % 2 == 0)
+	if (philo->id % 2 == 0)
 		usleep(1000);
-	while(1)
+	while (1)
 	{
 		if (ft_am_i_dead(philo) == 1)
 			return (NULL);
@@ -47,12 +45,12 @@ void *ft_philo(void *arg)
 	}
 }
 
-int ft_am_i_dead(t_philo *philo)
+int	ft_am_i_dead(t_philo *philo)
 {
-	int ret;
-	
+	int	ret;
+
 	ft_safe_mutex(LOCK, &(philo->data->dead_mtx));
 	ret = (int)philo->data->dead;
 	ft_safe_mutex(UNLOCK, &(philo->data->dead_mtx));
-	return(ret);
+	return (ret);
 }

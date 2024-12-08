@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:56:51 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/08 19:28:54 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:30:11 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static void	ft_assign_mtx(t_philo *philo, int i, t_data *data)
 	}
 }
 
-int ft_safe_mutex(t_optype type, t_mtx *mutex)
+int	ft_safe_mutex(t_optype type, t_mtx *mutex)
 {
-	int value;
+	int	value;
 
 	value = 0;
 	if (type == LOCK)

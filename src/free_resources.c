@@ -6,18 +6,18 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/08 18:57:26 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:42:06 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void ft_destroy_mutexes(t_data *data);
+static void	ft_destroy_mutexes(t_data *data);
 
-int ft_free_resources(t_data *data)
+int	ft_free_resources(t_data *data)
 {
-	int error;
-	int i;
+	int	error;
+	int	i;
 
 	i = 0;
 	error = 0;
@@ -26,15 +26,15 @@ int ft_free_resources(t_data *data)
 		free(data->forks);
 	if (data->philos)
 		free(data->philos);
-	return(error);
+	return (error);
 }
 
-static void ft_destroy_mutexes(t_data *data)
+static void	ft_destroy_mutexes(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(i < data->nr_of_philos)
+	while (i < data->nr_of_philos)
 	{
 		ft_safe_mutex(DESTROY, &(data->philos[i].last_meal_mtx));
 		ft_safe_mutex(DESTROY, &(data->forks[i]));
@@ -44,27 +44,13 @@ static void ft_destroy_mutexes(t_data *data)
 	ft_safe_mutex(DESTROY, &(data->dead_mtx));
 	ft_safe_mutex(DESTROY, &(data->print));
 }
-// int ft_i_threads_destroy(t_data *data, int i)
-// {
-// 	int j;
 
-// 	data->error = true;
-// 	ft_safe_mutex(UNLOCK, &(data->synch));
-// 	j = 0;
-// 	while (j < i)
-// 	{
-// 		pthread_join(data->philos[j].philo, NULL);
-// 		i++;
-// 	}
-// 	return(ft_error_message(THRED_ERR));
-// }
-
-void ft_wait_threads(t_data *data)
+void	ft_wait_threads(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(i < data->nr_of_philos)
+	while (i < data->nr_of_philos)
 	{
 		ft_safe_pthread(&(data->philos[i].philo), JOIN, NULL, NULL);
 		i++;

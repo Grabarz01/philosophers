@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:40:19 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/08 19:14:00 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:31:54 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int	ft_get_values(int argc, char **argv, int **values);
 
 int	ft_input_manager(int argc, char **argv, t_data *data)
 {
-	int *values;
-	
+	int	*values;
+
 	if (!argv)
 		return (ft_error_message(NO_ARGS));
 	if (argc < 5 || argc > 6)
@@ -42,7 +42,7 @@ int	ft_input_manager(int argc, char **argv, t_data *data)
 	free(values);
 	if (data->nr_of_philos == 0)
 		return (ft_error_message(NO_PHILO));
-	return(0);
+	return (0);
 }
 
 static int	ft_check_arguments(char **argv)

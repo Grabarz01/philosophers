@@ -6,12 +6,11 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:15:00 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/08 19:32:10 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:44:00 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 static int	ft_init_philos(t_data *data);
 
