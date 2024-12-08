@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eating.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:44:53 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/07 09:15:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:05:36 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ static int ft_odd_philo(t_philo *philo, int id)
 	t_tmv tmp;
 	
 	ft_safe_mutex(LOCK, philo->l_fork_mtx);
-	gettimeofday(&tmp, NULL);
 	if (ft_print_fork(philo, philo->data, tmp, philo->id) == 1)
-	{
-		ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
 		return (1);
-	}
 	ft_safe_mutex(LOCK, philo->r_fork_mtx);
 	if (ft_forks_taken(philo, &tmp) == 1)
 		return (1);
 	usleep(philo->data->t_eat * 1000);
 	ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
 	ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
-	gettimeofday(&tmp, NULL);
+	if(++(philo->meal_count) == philo->meals_needed)
+	{
+		if (ft_am_full(philo) == 1)
+			return(1);
+	}
 	if (ft_print_sleep(philo, philo->data, tmp, philo->id) == 1)
 		return (1);
 	if (ft_sleep(philo, tmp) == 1)
@@ -68,25 +68,28 @@ static int ft_even_philo(t_philo *philo, int id)
 	t_tmv tmp;
 
 	ft_safe_mutex(LOCK, philo->r_fork_mtx);
-	gettimeofday(&tmp, NULL);
 	if (ft_print_fork(philo, philo->data, tmp, philo->id) == 1)
-	{
-		ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
 		return (1);
-	}
 	ft_safe_mutex(LOCK, philo->l_fork_mtx);
 	if (ft_forks_taken(philo, &tmp) == 1)
 		return (1);
 	usleep(philo->data->t_eat * 1000);
 	ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
 	ft_safe_mutex(UNLOCK, philo->l_fork_mtx);
-	if(++(philo->meal_count) == philo->data->max_meals)
+	if(++(philo->meal_count) == philo->meals_needed)
 	{
 		ft_safe_mutex(LOCK, &(philo->data->full_mtx));
 		philo->data->all_full++;
+		if (philo->data->all_full == philo->data->nr_of_philos)
+		{
+			ft_safe_mutex(LOCK, &philo->data->dead_mtx);
+			philo->data->dead = true;
+			ft_safe_mutex(UNLOCK, &philo->data->dead_mtx);
+			ft_safe_mutex(UNLOCK, &(philo->data->full_mtx));
+			return(1);
+		}
 		ft_safe_mutex(UNLOCK, &(philo->data->full_mtx));
 	}
-	gettimeofday(&tmp, NULL);
 	if (ft_print_sleep(philo, philo->data, tmp, philo->id) == 1)
 		return (1);
 	if (ft_sleep(philo, tmp) == 1)
@@ -99,7 +102,6 @@ static int ft_forks_taken(t_philo *philo, t_tmv *tmp)
 	ft_safe_mutex(LOCK, &philo->last_meal_mtx);
 	gettimeofday(&philo->last_meal, NULL);
 	ft_safe_mutex(UNLOCK, &philo->last_meal_mtx);
-	gettimeofday(tmp, NULL);
 	if (ft_print_eat(philo, philo->data, *tmp, philo->id) == 1)
 	{
 		ft_safe_mutex(UNLOCK, philo->r_fork_mtx);
@@ -114,7 +116,6 @@ static int ft_sleep(t_philo *philo, t_tmv begining)
 	t_tmv timer;
 	
 	usleep(philo->data->t_sleep * 1000);
-	gettimeofday(&timer, NULL);
 	if (ft_print_think(philo, philo->data, timer, philo->id) == 1)
 		return (1);
 	return (0);

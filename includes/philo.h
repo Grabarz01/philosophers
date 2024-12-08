@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 15:12:36 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/12/07 10:28:40 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:06:19 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ struct s_philo
 #define NO_ARGS "Lack of arguments\n"
 #define EMPTY_ARG "Empty argument\n"
 #define TOO_BIG "The max value of the agument is limited to MAX_INT\n"
-#define NO_PHILO "The number of philosophers is equal 0. The end of program\n"
+#define NO_PHILO "The number of philosophers is equal 0. The end of program.\n"
 #define MTX_ERR "Error: mutex error\n"
 #define PTHR_ERR "Error: pthread error\n"
 #define NO_MEM "Error: lack of memory\n"
@@ -119,28 +119,25 @@ int ft_safe_mutex(t_optype type, t_mtx *mutex);
 /*Xsafe_pthreads.c*/
 int ft_safe_pthread(pthread_t *thread, t_optype type, t_philo *philo, t_data *data);
 
-/*Xmy_usleep.c*/
-void ft_my_usleep(long m_sec,  t_tmv t_start);
-
 /*Xinput_checkers.c*/
-int ft_input_checker(int argc, char **argv);
+int ft_input_manager(int argc, char **argv, t_data *data);
 int	ft_isdigit(int c);
 
 /*Xerror.c*/
 int ft_error_message(char *str);
 
 /*Xdata_init.c*/
-int ft_data_init(t_data *data, int argc, char **argv);
+int ft_data_init(t_data *data);
 
 /*Xsafe_mutexex.c*/
 int ft_safe_mutex(t_optype type, t_mtx *mutex);
 
 /*threads.c*/
-int ft_init_threads(int value, t_data *data);
+void ft_init_threads(int value, t_data *data);
 void *ft_philo(void *arg);
 int ft_am_i_dead(t_philo *philo);
 void *ft_monitor(void *arg);
-int ft_are_u_ok(t_philo *philo, int *all_full);
+int ft_are_u_ok(t_philo *philo);
 
 /*Xlocks.c*/
 int ft_print_eat(t_philo *philo, t_data *data, t_tmv cur_time, int id);
@@ -163,5 +160,8 @@ int ft_free_resources(t_data *data);
 void ft_wait_threads(t_data *data);
 
 void *ft_philo_alone(void *arg);
+
+/*monitor.c*/
+int ft_am_full(t_philo *philo);
 
 #endif
